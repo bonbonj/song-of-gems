@@ -219,8 +219,9 @@ def get_all_songs(all_gem_list):
             if result != None:
                 oldlst = get_songlst(result)
                 for song in oldlst:
-                    song['Term'] = keyword
-                    all_song_lst.append(clean_songlst(song))
+                    song = clean_songlst(song)
+                    song['GemName'] = keyword
+                    all_song_lst.append(song)
             else:
                 pass
         except:
@@ -261,7 +262,8 @@ def create_db():
             "Artist" TEXT NOT NULL,
             "Year" INTEGER NOT NULL,
             "Genre" TEXT NOT NULL,
-            "GemId" INTEGER NOT NULL
+            "GemName" TEXT NOT NULL,
+            "GemId" INTEGER
         )
     '''
 
@@ -314,19 +316,26 @@ def load_songs():
 
     insert_song_sql = '''
         INSERT INTO Songs
-        VALUES (NULL, ?, ?, ?, ?, ?)
+        VALUES (NULL, ?, ?, ?, ?, ?, ?)
     '''
     conn = sqlite3.connect('gemstones.sqlite')
     cur = conn.cursor()
 
     for i in all_song_lst:
+        cur.execute(select_gem_id_sql, [i['GemName']])
+        res = cur.fetchone()
+        GemId = None
+        if res is not None:
+            GemId = res[0]
+
         cur.execute(insert_song_sql,
             [
                 i["SongName"],
                 i["Artist"],
                 i["Year"],
                 i["Genre"],
-                2
+                i['GemName'],
+                GemId
             ]
         )
     conn.commit()
@@ -351,5 +360,5 @@ if __name__ == "__main__":
     #lst = (get_songlst(response))
     #newlst = clean_songlst(lst)
     #print(lst)
-    #print(get_all_songs(all_gem_list))
+    #print(all_song_lst)
     pass
