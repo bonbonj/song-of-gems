@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import json
 import sqlite3
+import plotly.graph_objs as go
 
 CACHE_FILENAME = 'cache.json'
 CACHE_DICT = {}
@@ -9,6 +10,7 @@ BASEURL = 'https://geology.com/gemstones/'
 BASEURL2 = "https://itunes.apple.com/search"
 KEYWORD = ""
 GEM_KEYS = {"Chemical Classification","Color", "Streak", "Luster", "Diaphaneity", "Cleavage", "Mohs Hardness", "Specific Gravity", "Diagnostic Properties", "Chemical Composition", "Crystal System", "Uses", "Name"}
+
 # Initialize the class for gemstones and songs
 
 #Song Class
@@ -148,6 +150,7 @@ def write_to_list(dict):
     for k, v in dict.items():
         if v is not None:
             all_gem_list.append(v)
+            #v['Mohs Hardness'] = v['Mohs Hardness'].split()[0]
             v['Name'] = k
         else:
             pass
@@ -246,7 +249,7 @@ def create_db():
             "Luster" TEXT NOT NULL,
             "Diaphaneity" TEXT NOT NULL,
             "Cleavage" TEXT NOT NULL,
-            "Mohs" TEXT NOT NULL,
+            "Mohs" REAL,
             "Gravity" TEXT NOT NULL,
             "Properties" TEXT NOT NULL,
             "Composition" TEXT NOT NULL,
@@ -293,7 +296,7 @@ def load_gems():
                     i["Luster"],
                     i["Diaphaneity"],
                     i["Cleavage"],
-                    i["Mohs Hardness"],
+                    float(i["Mohs Hardness"].split()[0]),
                     i["Specific Gravity"],
                     i["Diagnostic Properties"],
                     i["Chemical Composition"],
@@ -340,25 +343,166 @@ def load_songs():
         )
     conn.commit()
     conn.close()
-#Part5: Other helper functions
+
+
+def connection(command):
+    '''Added function to constructs and executes SQL query
+    to retrieve data based on query (reduce repetitive code)
+
+    Parameters
+    ----------
+    quert:string
+
+    Returns
+    -------
+    list
+        a list of tuples that represent the query result
+    '''
+    connection = sqlite3.connect('gemstones.sqlite')
+    cursor = connection.cursor()
+    result = cursor.execute(command).fetchall()
+    connection.close()
+    return result
+
+
+def get_gem_data(gemname):
+    '''return the properties of the inputed gem databa
+    '''
+    command = f'''SELECT Classification, Color, Streak, Luster, Diaphaneity,\
+               Cleavage, Mohs, Gravity, Properties, Composition, Crystal,\
+               Uses
+               FROM Gems AS b
+               WHERE Name = "{gemname}"
+                '''
+    return connection(command)
+
+
+def get_soft_gem():
+    command = f'''SELECT Name, Mohs
+               FROM Gems AS b
+               ORDER BY Mohs ASC
+               LIMIT 15
+                '''
+    return connection(command)
+
+
+def get_hard_gem():
+    command = f'''SELECT Name, Mohs
+               FROM Gems AS b
+               ORDER BY Mohs DESC
+               LIMIT 15
+                '''
+    return connection(command)
+
+
+def get_songs(gemname):
+    command = f'''SELECT SongName, Artist, Year, Genre
+               FROM Songs AS s
+                JOIN Gems AS g
+                ON s.GemId = g.Id
+               WHERE GemName = "{gemname}"
+               ORDER BY Mohs DESC
+               LIMIT 15
+                '''
+    return connection(command)
+
+#Part5: plotly
+def graph_hardbar():
+    hard_gem_lst = get_hard_gem()
+    xvals = [gem[0] for gem in hard_gem_lst]
+    yvals = [gem[1] for gem in hard_gem_lst]
+
+    fig = go.Figure(go.Bar(x=xvals,
+                      y=yvals,
+                      width=0.5))
+    fig.update_traces(marker_color=["#f67280","#c06c84","#c06c84","#c06c84","#6c5b7b","#6c5b7b","#6c5b7b","#6c5b7b","#6c5b7b","#355c7d","#355c7d","#355c7d","#213a4f","#213a4f","#213a4f","#213a4f"])
+    fig.update_layout(title="Top 15 Hardest Gemstones")
+    fig.show()
+
+
+def graph_hardpolar():
+    hard_gem_lst = get_hard_gem()
+    fig = go.Figure(go.Barpolar(
+        r=[gem[1] for gem in hard_gem_lst],
+        text=[gem[0] for gem in hard_gem_lst],
+        #theta=[65, 15, 210, 110, 312.5, 180, 270],
+        width=[10,10,10,10,10,10,10,10,10,10,10,10,10,10,10],
+        ids=[gem[0] for gem in hard_gem_lst],
+        marker_color=["#f67280","#c06c84","#c06c84","#c06c84","#6c5b7b","#6c5b7b","#6c5b7b","#6c5b7b","#6c5b7b","#6c5b7b","#355c7d","#355c7d","#355c7d","#213a4f","#213a4f","#213a4f"],
+        #marker_line_color="#30475e",
+        #marker_line_width=2,
+        opacity=0.95
+    ))
+    fig.update_layout(
+        template=None,
+        title='Top 15 Hardest Gemstones',
+        font_size=16,
+        polar = dict(
+            radialaxis = dict(range=[0, 10], showticklabels=False, ticks=''),
+            #angularaxis = dict(showticklabels=False, ticks=''),
+        )
+    )
+
+    fig.show()
+
+
+def graph_softbar():
+    soft_gem_lst = get_soft_gem()
+    xvals = [gem[0] for gem in soft_gem_lst]
+    yvals = [gem[1] for gem in soft_gem_lst]
+
+    fig = go.Figure(go.Bar(x=xvals,
+                      y=yvals,
+                      width=0.5))
+    fig.update_traces(marker_color=["#ff9900","#ca431d","#ca431d","#ca431d","#8b104e","#8b104e","#8b104e","#8b104e","#520556","#520556","#520556","#520556","#520556","#330336","#330336"])
+    fig.update_yaxes(range=[0, 10])
+    fig.update_layout(title="Top 15 Softest Gemstones")
+    fig.show()
+
+
+def graph_softpolar():
+    soft_gem_lst = get_soft_gem()
+    fig = go.Figure(go.Barpolar(
+        r=[gem[1] for gem in soft_gem_lst],
+        text=[gem[0] for gem in soft_gem_lst],
+        #theta=[65, 15, 210, 110, 312.5, 180, 270],
+        width=[10,10,10,10,10,10,10,10,10,10,10,10,10,10,10],
+        ids=[gem[0] for gem in soft_gem_lst],
+        marker_color=["#ff9900","#ca431d","#ca431d","#ca431d","#8b104e","#8b104e","#8b104e","#8b104e","#520556","#520556","#520556","#520556","#520556","#330336","#330336"],
+        #marker_line_color="#30475e",
+        #marker_line_width=2,
+        opacity=0.95
+    ))
+    fig.update_layout(
+        template=None,
+        title='Top 15 Softest Gemstones',
+        font_size=16,
+        polar = dict(
+            radialaxis = dict(range=[0, 10], showticklabels=False, ticks=''),
+            #angularaxis = dict(showticklabels=False, ticks=''),
+        )
+    )
+
+    fig.show()
 
 #Main
 if __name__ == "__main__":
-    CACHE_DICT = open_cache()
-    gem_dict = build_gem_dict()
+    #CACHE_DICT = open_cache()
+    #gem_dict = build_gem_dict()
     #get_gem_instance("https://geology.com/gemstones/red-beryl/")
     #print(get_all_gem_info(gem_dict))
-    all_gem_dict = get_all_gem_info(gem_dict)
-    all_gem_lst = write_to_list(all_gem_dict)
-    all_song_lst = get_all_songs(all_gem_lst)
-    #dumped_json_gem = json.dumps(all_gem_list)
-    #get_all_gem_info(gem_dict)
-    create_db()
-    load_gems()
-    load_songs()
-    #response = search_itunesapi(url = BASEURL2, params= {"term" : 'Amethyst', 'limit': 10})
-    #lst = (get_songlst(response))
-    #newlst = clean_songlst(lst)
-    #print(lst)
-    #print(all_song_lst)
+    #all_gem_dict = get_all_gem_info(gem_dict)
+    #all_gem_lst = write_to_list(all_gem_dict)
+    #print(len(all_gem_lst))
+    #all_song_lst = get_all_songs(all_gem_lst)
+    #create_db()
+    #load_gems()
+    #load_songs()
+    #print(get_gem_data('opal'))
+    #print(get_soft_gem())
+    #print(get_hard_gem())
+    #graph_hardbar()
+    graph_hardpolar()
+    #graph_softbar()
+    graph_softpolar()
     pass
