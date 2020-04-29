@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Songs of Gems Home</title>
+	<link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+	<style>
+	html{
+			scroll-behavior: smooth;
+	}
+
+	* {box-sizing: border-box;}
+	body{
+		font-family: "Nunito", sans-serif;
+		padding: auto;
+		margin: auto;
+		background-image: url("../static/background2.png");
+		background-attachment: fixed;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+
+	h1{
+		/*background: #0c7b93;*/
+		text-align: center;
+		font-size: 40px;
+		color: #271245;
+	}
+
+	/*footer*/
+	footer{
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+		background: #271245;
+		font-size: 15px;
+		font-weight: 550;
+		color:#ffffff;
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+	}
+
+	footer li{
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		list-style: none;
+	}
+
+	.footernav{
+		color: #ffffff;
+		text-decoration: none;
+		line-height: 20px;
+		text-align: center;
+	}
+
+	.footernav:hover, .footernav:focus{
+		text-decoration: underline;
+		transition-duration: 1s;
+	}
+
+	/*List*/
+	.container{
+		margin-left:15%;
+	}
+	.gemcol{
+		display: inline-block;
+		vertical-align: top;
+		margin: auto;
+		padding:100px;
+	}
+
+	#submit{
+		display: block;
+		border: none;
+		border-radius: 10px;
+		background-color: #2d3561;
+		padding: 10px;
+		text-align: center;
+		text-decoration: none;
+		color: white;
+		font-size: 20px;
+		width:200px;
+		margin-left:30%;
+	}
+
+	#submit:hover{
+		background-color: #c05c7e;
+	}
+
+	#empty{
+		padding: 100px;
+	}
+	</style>
+</head>
+
+<body>
+<main>
+	<h1>
+	Select one gem name to learn more!
+	</h1>
+	<div class='container'>
+		<form action='/gems' method='POST'>
+		<div class = 'gemcol'>
+		<b><p>A-D</p><br></b>
+         <input type='radio' name='gem' value = 'amazonite'/>Amazonite<br/>
+				 <input type='radio' name='gem' value = 'amethyst'/>Amethyst<br/>
+				 <input type='radio' name='gem' value = 'ametrine'/>Ametrine<br/>
+				 <input type='radio' name='gem' value = 'andalusite'/>Andalusite<br/>
+				 <input type='radio' name='gem' value = 'anyolite'/>Anyolite<br/>
+				 <input type='radio' name='gem' value = 'apatite'/>Apatite<br/>
+				<input type='radio' name='gem' value = 'aquamarine'/>Aquamarine<br/>
+				<input type='radio' name='gem' value = 'aventurine'/>Aventurine<br/>
+				<input type='radio' name='gem' value = 'azurite'/>Azurite<br/>
+				<input type='radio' name='gem' value = 'benitoite'/>Benitoite<br/>
+				<input type='radio' name='gem' value = 'beryl'/>Beryl<br/>
+				<input type='radio' name='gem' value = 'bloodstone'/>Bloodstone<br/>
+				<input type='radio' name='gem' value = 'charoite'/>Charoite<br/>
+				<input type='radio' name='gem' value = 'chrysoberyl'/>Chrysoberyl<br/>
+				<input type='radio' name='gem' value = 'cordierite'/>Cordierite<br/>
+				<input type='radio' name='gem' value = 'diamond'/>Diamond<br/>
+				<input type='radio' name='gem' value = 'diopside'/>Diopside<br/>
+		</div>
+		<div class = 'gemcol'>
+    <b><p>E-N</p><br></b>
+				<input type='radio' name='gem' value = 'fluorite'/>Fluorite<br/>
+				<input type='radio' name='gem' value = 'garnet'/>Garnet<br/>
+				<input type='radio' name='gem' value = 'gaspeite'/>Gaspeite<br/>
+			 <input type='radio' name='gem' value = 'goshenite'/>Goshenite<br/>
+			 <input type='radio' name='gem' value = 'green beryl'/>Green beryl<br/>
+			 <input type='radio' name='gem' value = 'helenite'/>Helenite<br/>
+			 <input type='radio' name='gem' value = 'heliodor'/>Heliodor<br/>
+			 <input type='radio' name='gem' value = 'hematite'/>Hematite<br/>
+			 <input type='radio' name='gem' value = 'iolite'/>Iolite<br/>
+			 <input type='radio' name='gem' value = 'lepidolite'/>Lepidolite<br/>
+			 <input type='radio' name='gem' value = 'malachite'/>Malachite<br/>
+			 <input type='radio' name='gem' value = 'moldavite'/>Moldavite<br/>
+		</div>
+		<div class = 'gemcol'>
+		<b> <p>O-S</p><br></b>
+			 <input type='radio' name='gem' value = 'opal'/>Opal<br/>
+			 <input type='radio' name='gem' value = 'peridot'/>Peridot<br/>
+			 <input type='radio' name='gem' value = 'quartz'/>Quartz<br/>
+			 <input type='radio' name='gem' value = 'red beryl'/>Red Beryl<br/>
+			 <input type='radio' name='gem' value = 'rhodochrosite'/>Rhodochrosite<br/>
+			 <input type='radio' name='gem' value = 'rhodonite'/>Rhodonite<br/>
+			 <input type='radio' name='gem' value = 'rose quartz'/>Rose Quartz<br/>
+			 <input type='radio' name='gem' value = 'ruby'/>Ruby<br/>
+			 <input type='radio' name='gem' value = 'sapphire'/>Sapphire<br/>
+			 <input type='radio' name='gem' value = 'scapolite'/>Scapolite<br/>
+			 <input type='radio' name='gem' value = 'smoky quartz'/>Smoky Quartz<br/>
+			 <input type='radio' name='gem' value = 'sodalite'/>Sodalite<br/>
+			 <input type='radio' name='gem' value = 'sphalerite'/>Sphalerite<br/>
+			 <input type='radio' name='gem' value = 'sphene'/>Sphene<br/>
+			 <input type='radio' name='gem' value = 'spinel'/>Spinel<br/>
+			 <input type='radio' name='gem' value = 'spodumene'/>Spodumene<br/>
+			 <input type='radio' name='gem' value = 'sugilite'/>Sugilite<br/>
+		 </div>
+		 <div class = 'gemcol'>
+		<b> <p>T-Z</p><br></b>
+			<input type='radio' name='gem' value = 'titanite'/>Titanite<br/>
+			<input type='radio' name='gem' value = 'topaz'/>Topaz<br/>
+			<input type='radio' name='gem' value = 'tourmaline'/>Tourmaline<br/>
+			<input type='radio' name='gem' value = 'turquoise'/>Turquoise<br/>
+			<input type='radio' name='gem' value = 'variscite'/>Variscite<br/>
+			<input type='radio' name='gem' value = 'zircon'/>Zircon<br/>
+			<input type='radio' name='gem' value = 'zoisite'/>Zoisite<br/>
+		</div>
+<input type='submit' value='Get Gemstone' id="submit"/>
+		</form>
+	</div>
+ <div id='empty'> </div>
+</main>
+
+<footer>
+		<ul>
+			<li>Data source from https://geology.com/gemstones/ and Itunes. Created by Bonnie Jiang. Interested in learning more about me?</li>
+			<li><a class="footernav" href="https://www.linkedin.com/in/bonnie-q-jiang/">LinkedIn</a></li>
+			<li><a class="footernav" href="https://www.bonniejiang.com">Portfolio</a></li>
+		</ul>
+</footer>
+
+</body>
+</html>

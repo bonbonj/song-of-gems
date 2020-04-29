@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Songs of Gems Home</title>
+	<!--<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">-->
+	<link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+	<style>
+	html{
+	    scroll-behavior: smooth;
+	}
+
+	* {box-sizing: border-box;}
+	body{
+	  font-family: "Nunito", sans-serif;
+	  padding: auto;
+	  margin: auto;
+	  background-image: url("../static/background.png");
+		background-attachment: fixed;
+	  background-position: center;
+	  background-repeat: no-repeat;
+	  background-size: cover;
+	}
+
+	h1{
+	  /*background: #0c7b93;*/
+	  text-align: left;
+	  font-size: 60px;
+	  letter-spacing: 5px;
+	  line-height: 50px;
+	  color: #271245;
+	  margin:auto;
+	  padding:80px;
+	}
+
+	/*footer*/
+	footer{
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: space-between;
+	  align-items: center;
+	  background: #271245;
+	  font-size: 15px;
+	  font-weight: 550;
+	  color:#ffffff;
+	  position: fixed;
+	  left: 0;
+	  bottom: 0;
+	  width: 100%;
+	}
+
+	footer li{
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: space-between;
+	  list-style: none;
+	}
+
+	.footernav{
+	  color: #ffffff;
+	  text-decoration: none;
+	  line-height: 20px;
+	  text-align: center;
+	}
+
+	.footernav:hover, .footernav:focus{
+	  text-decoration: underline;
+	  transition-duration: 1s;
+	}
+
+	/*button*/
+	.button{
+		/*background-color: #512b58;*/
+		opacity: 50%;
+		display: block;
+	  border: none;
+	  border-radius: 10px;
+	  padding: 20px;
+	  text-align: center;
+	  text-decoration: none;
+		color: white;
+	  font-size: 20px;
+		width:250px;
+		margin-left: 5%;
+	}
+
+	.button:hover{
+		background-color: #c05c7e;
+	}
+
+
+	</style>
+</head>
+
+<body>
+<main>
+	<h1>
+		Songs of Gems
+	</h1>
+		<form method="post">
+		<button class="button"><a href="{{ url_for('visit') }}">Visit</a></button>
+	</br>
+		<button class="button"><a href="{{ url_for('compare') }}">Compare</a></button>
+		</form>
+</main>
+
+<footer>
+		<ul>
+			<li>Data source from https://geology.com/gemstones/ and Itunes. Created by Bonnie Jiang. Interested in learning more about me?</li>
+			<li><a class="footernav" href="https://www.linkedin.com/in/bonnie-q-jiang/">LinkedIn</a></li>
+			<li><a class="footernav" href="https://www.bonniejiang.com">Portfolio</a></li>
+		</ul>
+</footer>
+
+</body>
+</html>

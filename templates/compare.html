@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Songs of Gems Home</title>
+	<link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+	<style>
+	html{
+			scroll-behavior: smooth;
+	}
+
+	* {box-sizing: border-box;}
+	body{
+		font-family: "Nunito", sans-serif;
+		padding: auto;
+		margin: auto;
+		background-image: url("../static/background2.png");
+		background-attachment: fixed;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+
+	h1{
+		/*background: #0c7b93;*/
+		text-align: center;
+		font-size: 40px;
+		color: #271245;
+	}
+
+	/*footer*/
+	footer{
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+		background: #271245;
+		font-size: 15px;
+		font-weight: 550;
+		color:#ffffff;
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+	}
+
+	footer li{
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		list-style: none;
+	}
+
+	.footernav{
+		color: #ffffff;
+		text-decoration: none;
+		line-height: 20px;
+		text-align: center;
+	}
+
+	.footernav:hover, .footernav:focus{
+		text-decoration: underline;
+		transition-duration: 1s;
+	}
+
+	.in{
+		display: inline-block;
+		margin-left:40%;
+	}
+
+	#submit{
+		display: block;
+		border: none;
+		border-radius: 10px;
+		background-color: #2d3561;
+		padding: 10px;
+		text-align: center;
+		text-decoration: none;
+		color: white;
+		font-size: 20px;
+		width:200px;
+		margin:auto;
+	}
+
+	#submit:hover{
+		background-color: #c05c7e;
+	}
+
+	div{
+		padding:50px;
+	}
+
+
+	</style>
+</head>
+
+<body>
+<main>
+	<h1>
+	Compare
+	</h1>
+ <form action='/mohs' method='POST'>
+	 <div class='in'>
+		<div>
+	 <input type='radio' name='mohs' value = 'hard'/>Top 15 Hard Gems<br/>
+ </div>
+ <div>
+		<input type='radio' name='mohs' value = 'soft'/>Top 15 Soft Gems<br/>
+	</div>
+	<div>
+		<input type='radio' name='mohs' value = 'all'/>Show All<br/>
+	</div>
+</div>
+	 <div>
+		<input type='submit' value='Get Mohs' id='submit'/>
+	</div>
+ </form>
+</main>
+
+<footer>
+		<ul>
+			<li>Data source from https://geology.com/gemstones/ and Itunes. Created by Bonnie Jiang. Interested in learning more about me?</li>
+			<li><a class="footernav" href="https://www.linkedin.com/in/bonnie-q-jiang/">LinkedIn</a></li>
+			<li><a class="footernav" href="https://www.bonniejiang.com">Portfolio</a></li>
+		</ul>
+</footer>
+
+</body>
+</html>

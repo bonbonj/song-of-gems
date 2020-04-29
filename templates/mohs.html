@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Songs of Gems Home</title>
+	<link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+	<style>
+	html{
+			scroll-behavior: smooth;
+	}
+
+	* {box-sizing: border-box;}
+	body{
+		font-family: "Nunito", sans-serif;
+		padding: auto;
+		margin: auto;
+		background-color: #fce1e5;
+	}
+
+	h1{
+		/*background: #0c7b93;*/
+		text-align: center;
+		font-size: 40px;
+		color: #271245;
+	}
+
+	h2{
+		color: #271245;
+		text-align: center;
+	}
+
+	/*footer*/
+	footer{
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+		background: #271245;
+		font-size: 15px;
+		font-weight: 550;
+		color:#ffffff;
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+	}
+
+	footer li{
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		list-style: none;
+	}
+
+	.footernav{
+		color: #ffffff;
+		text-decoration: none;
+		line-height: 20px;
+		text-align: center;
+	}
+
+	.footernav:hover, .footernav:focus{
+		text-decoration: underline;
+		transition-duration: 1s;
+	}
+
+	div{
+		width: 70%;
+		margin:auto;
+	}
+
+	</style>
+</head>
+
+<body>
+<main>
+	<div>
+	{{plot_div1 | safe}}
+  {{plot_div2 | safe}}
+</div>
+</main>
+
+<footer>
+		<ul>
+			<li>Created by Bonnie Jiang. Interested in learning more about me?</li>
+			<li><a class="footernav" href="https://www.linkedin.com/in/bonnie-q-jiang/">LinkedIn</a></li>
+			<li><a class="footernav" href="https://www.bonniejiang.com">Portfolio</a></li>
+		</ul>
+</footer>
+
+</body>
+</html>
